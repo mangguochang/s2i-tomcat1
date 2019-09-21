@@ -2,7 +2,7 @@ FROM openshift/base-centos7
 # setting port
 EXPOSE 8080
 
-ENV TOMCAT_VERSION=8.5.34 \
+ENV TOMCAT_VERSION=8.5.46 \
     MAVEN_VERSION=3.5.4 \
     STI_SCRIPTS_PATH=/usr/libexec/s2i/
 
@@ -12,19 +12,19 @@ LABEL io.k8s.description="Platform for building and running JEE applications on 
       io.openshift.tags="builder,tomcat" \
       io.openshift.s2i.destination="/opt/s2i/destination"
 
-COPY apache-maven-3.5.4-bin.tar /
-COPY apache-tomcat-8.5.34.tar /
+COPY apache-maven-3.5.4-bin.tar.gz /
+COPY apache-tomcat-8.5.46.tar.gz /
 
 # Install Maven, Tomcat 8.5.24
 RUN INSTALL_PKGS="tar java-1.8.0-openjdk java-1.8.0-openjdk-devel" && \
     yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
-    tar -xvf /apache-maven-3.5.4-bin.tar    -C /usr/local && \
+    tar -xvf /apache-maven-3.5.4-bin.tar.gz    -C /usr/local && \
     ln -sf /usr/local/apache-maven-$MAVEN_VERSION/bin/mvn /usr/local/bin/mvn && \
     mkdir -p $HOME/.m2 && \
     mkdir -p /tomcat && \
-    tar -xvf /apache-tomcat-8.5.34.tar --strip-components=1 -C /tomcat && \
+    tar -xvf /apache-tomcat-8.5.46.tar.gz --strip-components=1 -C /tomcat && \
     rm -rf /tomcat/webapps/* && \
     mkdir -p /opt/s2i/destination && \
     mkdir /tmp/src && \
