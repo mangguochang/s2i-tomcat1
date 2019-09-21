@@ -1,5 +1,5 @@
-M openshift/base-centos7
-
+FROM openshift/base-centos7
+# setting port
 EXPOSE 8080
 
 ENV TOMCAT_VERSION=8.5.34 \
